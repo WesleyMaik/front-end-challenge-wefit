@@ -1,5 +1,14 @@
 @import url("normalize.css");
 
+:root {
+	--primary: #009edd;
+	--success: #039b00;
+	--background: #2f2e41;
+	--gray: #999;
+	--white: #fff;
+	--black: #111;
+}
+
 html {
 	font-family: "Opens Sans", Arial, Helvetica, sans-serif;
 }
