@@ -28,6 +28,12 @@ const Wrapper = styled.div`
 			font-size: 12px;
 			color: var(--gray);
 		}
+
+		@media screen and (max-width: 1024px) {
+			p {
+				display: none;
+			}
+		}
 	}
 `;
 
