@@ -1,0 +1,11 @@
+@import url("normalize.css");
+
+html {
+	font-family: "Opens Sans", Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+	margin: 0;
+	height: 100%;
+}
