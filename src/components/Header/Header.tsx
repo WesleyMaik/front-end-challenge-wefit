@@ -13,6 +13,7 @@ type JustifyContent =
 	| "space-around";
 
 const Wrapper = styled.header<HeaderProps>`
+	min-height: 88px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
