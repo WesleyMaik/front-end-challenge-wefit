@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import { CartPlus } from "@/components/Icons";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 
 type AddToCartButtonProps = {
@@ -29,21 +29,21 @@ const Wrapper = styled.span`
 function AddToCartButton({ onClick, count = 0 }: AddToCartButtonProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 
-	useEffect(() => {
+	function handleClick() {
+		if (onClick) onClick();
+
 		buttonRef.current?.classList.add("success");
 
-		return () => {
-			setTimeout(() => {
-				buttonRef.current?.classList.remove("success");
-			}, 500);
-		};
-	}, [count]);
+		setTimeout(() => {
+			buttonRef.current?.classList.remove("success");
+		}, 500);
+	}
 
 	return (
 		<Button
 			title="Adicionar ao carrinho"
 			type="button"
-			onClick={onClick}
+			onClick={handleClick}
 			width="100%"
 			ref={buttonRef}
 		>

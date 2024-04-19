@@ -26,7 +26,9 @@ export type Product = {
 
 const MovieContext = createContext({} as MovieContextProps);
 
-const MOVIES_API_URL = import.meta.env.VITE_MOVIES_API;
+const MOVIES_API_URL =
+	import.meta.env.VITE_MOVIES_API ||
+	"https://wefit-movies.vercel.app/api/movies";
 
 function MovieProvider({ children }: MovieProviderProps) {
 	async function queryFunction() {

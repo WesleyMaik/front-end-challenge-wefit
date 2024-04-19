@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
 function EmptyState() {
 	function handleBackToHome() {
-		window.location.href = "./";
+		window.location.href = "/";
 	}
 
 	return (
