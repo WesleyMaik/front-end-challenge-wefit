@@ -1,6 +1,7 @@
 import { createContext, ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { sleep } from "@/utils/sleep";
 
 export type MovieContextProps = {
 	items: Product[];
@@ -28,15 +29,20 @@ const MovieContext = createContext({} as MovieContextProps);
 const MOVIES_API_URL = import.meta.env.VITE_MOVIES_API;
 
 function MovieProvider({ children }: MovieProviderProps) {
-	const { data, isLoading, error } = useQuery<MoviesAPIResponse>({
+	async function queryFunction() {
+		const response = await axios.get(MOVIES_API_URL, {
+			method: "GET",
+		});
+
+		await sleep(1000);
+
+		return response.data;
+	}
+
+	const { data, isLoading, error, isFetching } = useQuery<MoviesAPIResponse>({
 		initialData: { products: [] },
 		queryKey: ["movies"],
-		queryFn: async () =>
-			(
-				await axios.get(MOVIES_API_URL, {
-					method: "GET",
-				})
-			).data,
+		queryFn: queryFunction,
 	});
 
 	const items = data.products;
@@ -45,7 +51,7 @@ function MovieProvider({ children }: MovieProviderProps) {
 		<MovieContext.Provider
 			value={{
 				items,
-				isLoading,
+				isLoading: isLoading || isFetching,
 				error,
 			}}
 		>
