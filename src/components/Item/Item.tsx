@@ -44,7 +44,13 @@ const Wrapper = styled.div`
 function Item({ id, price, title, imageUrl = imagePlaceholder }: ItemProps) {
 	return (
 		<Wrapper id={`item-${id}`} className="item">
-			<img className="image" alt={title} src={imageUrl} width={200} />
+			<img
+				className="image"
+				alt={title}
+				src={imageUrl}
+				width={200}
+				loading="lazy"
+			/>
 			<h1 className="title">{title}</h1>
 			<h2 className="price">
 				<FormattedCurrency value={price} />
