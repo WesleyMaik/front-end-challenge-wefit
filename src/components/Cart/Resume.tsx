@@ -1,6 +1,6 @@
 import { useCart } from "@/hooks/useCart";
 import styled from "styled-components";
-import { RemoveItem, Stepper } from ".";
+import { RemoveItem, Stepper, EmptyState } from ".";
 import { Button } from "@/components/Button";
 import { FormattedCurrency } from "@/components/FormattedCurrency";
 
@@ -182,6 +182,10 @@ const Wrapper = styled.div`
 
 function Resume() {
 	const { items, subtotal, decreaseItem, increaseItem } = useCart();
+
+	if (!items || !items.length) {
+		return <EmptyState />;
+	}
 
 	return (
 		<Wrapper>
