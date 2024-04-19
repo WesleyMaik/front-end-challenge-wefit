@@ -19,6 +19,7 @@ const Wrapper = styled.div`
 	color: var(--black);
 	background-color: var(--white);
 	padding: 1rem;
+	animation: fadeGrow ease 1s forwards;
 
 	&:hover {
 		.image {

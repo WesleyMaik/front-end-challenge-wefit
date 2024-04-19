@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Item, ItemProps } from "@/components/Item";
 
+import spinner from "@/assets/icons/load-spinner.webp";
+
 type ShelfProps = {
 	items: ItemProps[];
+	isLoading?: boolean;
 };
 
 const Wrapper = styled.div`
@@ -25,7 +28,26 @@ const Wrapper = styled.div`
 	}
 `;
 
-function Shelf({ items }: ShelfProps) {
+const LoadingWrapper = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+
+	.spinner {
+		animation: spin ease-out 0.5s infinite;
+	}
+`;
+
+function Shelf({ items, isLoading }: ShelfProps) {
+	if (isLoading) {
+		return (
+			<LoadingWrapper>
+				<img src={spinner} width={50} className="spinner" />
+			</LoadingWrapper>
+		);
+	}
+
 	return (
 		<Wrapper>
 			{items.map(({ id, price, title, imageUrl }) => (
