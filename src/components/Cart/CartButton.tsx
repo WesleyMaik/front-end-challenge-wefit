@@ -42,7 +42,7 @@ function CartButton() {
 	const { count } = useCart();
 
 	return (
-		<Link title="Botão do Carrinho" href="/?cart" target="_self">
+		<Link title="Botão do Carrinho" href="./cart" target="_self">
 			<Wrapper>
 				<div className="content">
 					<p>Meu carrinho</p>
