@@ -9,6 +9,7 @@ export type CartContextProps = {
 	increaseItem: (prop: { id: string }) => void;
 	decreaseItem: (prop: { id: string }) => void;
 	count: number;
+	subtotal: number;
 };
 
 type CartItems = ItemProps & {
@@ -112,6 +113,12 @@ function CartProvider({
 			0
 		) || 0;
 
+	const subtotal =
+		items.reduce(
+			(previous, current) => (previous += current.price * current.quantity),
+			0
+		) || 0;
+
 	useEffect(() => {
 		store.set(STORE_KEY, items);
 	}, [items]);
@@ -125,6 +132,7 @@ function CartProvider({
 				count,
 				decreaseItem,
 				increaseItem,
+				subtotal,
 			}}
 		>
 			{children}
