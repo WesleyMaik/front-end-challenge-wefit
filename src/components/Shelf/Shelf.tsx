@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Item, ItemProps } from "@/components/Item";
 
-import spinner from "@/assets/icons/load-spinner.webp";
+import LoadingState from "./LoadingState";
+import EmptyState from "./EmptyState";
 
 type ShelfProps = {
 	items: ItemProps[];
@@ -28,24 +29,13 @@ const Wrapper = styled.div`
 	}
 `;
 
-const LoadingWrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 1rem;
-
-	.spinner {
-		animation: spin ease-out 0.5s infinite;
-	}
-`;
-
 function Shelf({ items, isLoading }: ShelfProps) {
 	if (isLoading) {
-		return (
-			<LoadingWrapper>
-				<img src={spinner} width={50} className="spinner" />
-			</LoadingWrapper>
-		);
+		return <LoadingState />;
+	}
+
+	if (!isLoading && items.length == 0) {
+		return <EmptyState />;
 	}
 
 	return (
