@@ -17,7 +17,11 @@ const Wrapper = styled.h1<LogoProps>`
 
 export default function Logo(props: LogoProps) {
 	return (
-		<Link title="Logo da WeMovie" href="/" target="_self">
+		<Link
+			title="Logo da WeMovie"
+			href={import.meta.env.BASE_URL}
+			target="_self"
+		>
 			<Wrapper {...props}>WeMovies</Wrapper>
 		</Link>
 	);

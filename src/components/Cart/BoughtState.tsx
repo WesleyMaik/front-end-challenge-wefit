@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
 function BoughtState() {
 	function handleBackToHome() {
-		window.location.href = import.meta.env.BASE_URL + "/";
+		window.location.href = import.meta.env.BASE_URL;
 	}
 
 	return (
