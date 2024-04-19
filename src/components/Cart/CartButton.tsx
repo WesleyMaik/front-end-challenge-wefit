@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Cart } from "@/components/Icons";
+import { useCart } from "@/hooks/useCart";
 
 const Link = styled.a`
 	display: block;
@@ -38,12 +39,14 @@ const Wrapper = styled.div`
 `;
 
 function CartButton() {
+	const { count } = useCart();
+
 	return (
 		<Link title="Botão do Carrinho" href="/?cart" target="_self">
 			<Wrapper>
 				<div className="content">
 					<p>Meu carrinho</p>
-					<span>0 itens</span>
+					<span>{count} itens</span>
 				</div>
 				<Cart />
 			</Wrapper>

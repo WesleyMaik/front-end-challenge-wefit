@@ -5,6 +5,7 @@ export type CartContextProps = {
 	items: CartItems[];
 	addItem: (newItem: ItemProps) => void;
 	removeItem: (prop: { id: string }) => void;
+	count: number;
 };
 
 type CartItems = ItemProps & {
@@ -59,12 +60,19 @@ function CartProvider({
 		setItems(newItems);
 	};
 
+	const count =
+		items.reduce(
+			(previous, current) => (previous += current?.quantity || 1),
+			0
+		) || 0;
+
 	return (
 		<CartContext.Provider
 			value={{
 				items,
 				addItem,
 				removeItem,
+				count,
 			}}
 		>
 			{children}
