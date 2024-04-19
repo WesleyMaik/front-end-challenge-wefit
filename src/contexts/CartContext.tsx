@@ -3,7 +3,7 @@ import { ItemProps } from "@/components/Item";
 
 export type CartContextProps = {
 	items: CartItems[];
-	addItem: (newItem: CartItems) => void;
+	addItem: (newItem: ItemProps) => void;
 	removeItem: (prop: { id: string }) => void;
 };
 
@@ -24,12 +24,12 @@ function CartProvider({
 }: CartProviderProps) {
 	const [items, setItems] = useState(initialItems);
 
-	const addItem = (newItem: CartItems) => {
-		setItems((items) => {
+	const addItem = (newItem: ItemProps) => {
+		const newItems = (() => {
 			const index = items.findIndex((item) => item.id == newItem.id);
 
 			if (index == -1) {
-				return [...items, newItem];
+				return [...items, { ...newItem, quantity: 1 }];
 			}
 
 			const selected = items[index];
@@ -38,11 +38,13 @@ function CartProvider({
 			items[index] = { ...selected, quantity: quantity + 1 };
 
 			return [...items];
-		});
+		})();
+
+		setItems(newItems);
 	};
 
 	const removeItem = ({ id }: { id: string }) => {
-		setItems((items) => {
+		const newItems = (() => {
 			const index = items.findIndex((item) => item.id == id);
 
 			if (index == -1) {
@@ -52,7 +54,9 @@ function CartProvider({
 			items.splice(index, 1);
 
 			return [...items];
-		});
+		})();
+
+		setItems(newItems);
 	};
 
 	return (
