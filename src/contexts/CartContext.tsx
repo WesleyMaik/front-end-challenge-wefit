@@ -6,6 +6,8 @@ export type CartContextProps = {
 	items: CartItems[];
 	addItem: (newItem: ItemProps) => void;
 	removeItem: (prop: { id: string }) => void;
+	increaseItem: (prop: { id: string }) => void;
+	decreaseItem: (prop: { id: string }) => void;
 	count: number;
 };
 
@@ -70,6 +72,40 @@ function CartProvider({
 		setItems(newItems);
 	};
 
+	const increaseItem = ({ id }: { id: string }) => {
+		const newItems = (() => {
+			const index = items.findIndex((item) => item.id == id);
+
+			if (index == -1) {
+				return items;
+			}
+
+			const currentItem = items[index];
+			items[index] = { ...currentItem, quantity: currentItem.quantity + 1 };
+
+			return [...items];
+		})();
+
+		setItems(newItems);
+	};
+
+	const decreaseItem = ({ id }: { id: string }) => {
+		const newItems = (() => {
+			const index = items.findIndex((item) => item.id == id);
+
+			if (index == -1) {
+				return items;
+			}
+
+			const currentItem = items[index];
+			items[index] = { ...currentItem, quantity: currentItem.quantity - 1 };
+
+			return [...items];
+		})();
+
+		setItems(newItems);
+	};
+
 	const count =
 		items.reduce(
 			(previous, current) => (previous += current?.quantity || 1),
@@ -87,6 +123,8 @@ function CartProvider({
 				addItem,
 				removeItem,
 				count,
+				decreaseItem,
+				increaseItem,
 			}}
 		>
 			{children}
