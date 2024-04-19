@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { ItemProps } from "@/components/Item";
+import store from "store2";
 
 export type CartContextProps = {
 	items: CartItems[];
@@ -19,11 +20,20 @@ export type CartProviderProps = {
 
 const CartContext = createContext({} as CartContextProps);
 
+const STORE_KEY = "cartItems";
+
 function CartProvider({
 	children,
 	items: initialItems = [],
 }: CartProviderProps) {
-	const [items, setItems] = useState(initialItems);
+	const [items, setItems] = useState(() => {
+		if (store.has(STORE_KEY)) {
+			const storedItems = store.get(STORE_KEY) as CartItems[];
+			return storedItems;
+		}
+
+		return initialItems;
+	});
 
 	const addItem = (newItem: ItemProps) => {
 		const newItems = (() => {
@@ -65,6 +75,10 @@ function CartProvider({
 			(previous, current) => (previous += current?.quantity || 1),
 			0
 		) || 0;
+
+	useEffect(() => {
+		store.set(STORE_KEY, items);
+	}, [items]);
 
 	return (
 		<CartContext.Provider
