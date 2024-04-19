@@ -3,6 +3,7 @@ import { Item, ItemProps } from "@/components/Item";
 
 import LoadingState from "./LoadingState";
 import EmptyState from "./EmptyState";
+import { useCart } from "@/hooks/useCart";
 
 type ShelfProps = {
 	items: ItemProps[];
@@ -30,6 +31,8 @@ const Wrapper = styled.div`
 `;
 
 function Shelf({ items, isLoading }: ShelfProps) {
+	const { items: cartItems, addItem } = useCart();
+
 	if (isLoading) {
 		return <LoadingState />;
 	}
@@ -47,6 +50,8 @@ function Shelf({ items, isLoading }: ShelfProps) {
 					price={price}
 					title={title}
 					imageUrl={imageUrl}
+					onAddToCartClick={addItem}
+					quantity={cartItems.find((item) => item.id == id)?.quantity || 0}
 				/>
 			))}
 		</Wrapper>

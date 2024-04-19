@@ -10,6 +10,11 @@ export type ItemProps = {
 	imageUrl?: string;
 };
 
+type ItemPropsWithCustoms = ItemProps & {
+	onAddToCartClick: (item: ItemProps) => void;
+	quantity: number;
+};
+
 const Wrapper = styled.div`
 	width: 100%;
 	display: flex;
@@ -42,7 +47,23 @@ const Wrapper = styled.div`
 	}
 `;
 
-function Item({ id, price, title, imageUrl = imagePlaceholder }: ItemProps) {
+function Item({
+	id,
+	price,
+	title,
+	imageUrl = imagePlaceholder,
+	quantity,
+	onAddToCartClick,
+}: ItemPropsWithCustoms) {
+	function handleAddToCart() {
+		onAddToCartClick({
+			id,
+			price,
+			title,
+			imageUrl,
+		});
+	}
+
 	return (
 		<Wrapper id={`item-${id}`} className="item">
 			<img
@@ -56,7 +77,7 @@ function Item({ id, price, title, imageUrl = imagePlaceholder }: ItemProps) {
 			<h2 className="price">
 				<FormattedCurrency value={price} />
 			</h2>
-			<AddToCartButton />
+			<AddToCartButton onClick={handleAddToCart} count={quantity} />
 		</Wrapper>
 	);
 }

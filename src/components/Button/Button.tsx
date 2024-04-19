@@ -1,4 +1,4 @@
-import { ComponentProps } from "react";
+import { ComponentProps, forwardRef } from "react";
 import styled from "styled-components";
 
 export type ButtonProps = {
@@ -28,10 +28,17 @@ const Wrapper = styled.button<ButtonProps>`
 	&:active {
 		transform: scale(0.9);
 	}
+
+	&.success {
+		background-color: var(--success);
+	}
 `;
 
-function Button(props: ButtonProps) {
-	return <Wrapper {...props} />;
-}
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(function (
+	props,
+	ref
+) {
+	return <Wrapper {...props} ref={ref} />;
+});
 
 export default Button;
