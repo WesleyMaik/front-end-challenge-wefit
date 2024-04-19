@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import styled from "styled-components";
-import { RemoveItem, Stepper, EmptyState } from ".";
-import { Button } from "@/components/Button";
+import { RemoveItem, Stepper, EmptyState, FinishButton, BoughtState } from ".";
 import { FormattedCurrency } from "@/components/FormattedCurrency";
 
 const Wrapper = styled.div`
@@ -181,7 +181,12 @@ const Wrapper = styled.div`
 `;
 
 function Resume() {
+	const [isFinished, setIsFinished] = useState(false);
 	const { items, subtotal, decreaseItem, increaseItem } = useCart();
+
+	if (isFinished) {
+		return <BoughtState />;
+	}
 
 	if (!items || !items.length) {
 		return <EmptyState />;
@@ -230,9 +235,7 @@ function Resume() {
 			))}
 			<hr />
 			<div className="summary">
-				<Button title="Finalizar Pedido" type="button">
-					Finalizar Pedido
-				</Button>
+				<FinishButton items={items} onFinishOrder={setIsFinished} />
 				<div className="total">
 					<p className="label">Total</p>
 					<p className="value">
