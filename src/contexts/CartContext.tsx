@@ -12,7 +12,7 @@ export type CartContextProps = {
 	subtotal: number;
 };
 
-type CartItems = ItemProps & {
+export type CartItems = ItemProps & {
 	quantity: number;
 };
 
@@ -23,7 +23,7 @@ export type CartProviderProps = {
 
 const CartContext = createContext({} as CartContextProps);
 
-const STORE_KEY = "cartItems";
+export const STORE_KEY = "cartItems";
 
 function CartProvider({
 	children,
